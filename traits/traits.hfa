@@ -1,0 +1,32 @@
+#ifndef __TRAITS_HFA__
+#define __TRAITS_HFA__
+
+#include <stdlib.hfa>
+#include <fstream.hfa>
+
+forall( T )
+trait sumable {
+	void ?{}( T &, zero_t );
+    // void ?{}( T &, T );              // ISSUE: DO NOT INCLUDE THESE OPERATORS
+    // T ?=?( T &, T );                 // IN ANY OF YOUR TRAIT DEFINITIONS
+	T ?+?( T, T );
+	T ?+=?( T &, T );
+	T ++?( T & );
+	T ?++( T & );
+};
+
+forall( T, ostype | sumable( T ) | ostream( ostype ) ) {
+    ostype & ?|?( ostype & , T );           // operator | (input, >>)
+    void ?|?( ostype & , T );           // operator | (input, >>)
+}
+
+forall( T | sumable( T ) ) {
+    T sum( T [ ], size_t );
+    struct TwoArrays {					// polymorphic (generic) type
+		* T x, y;						// two C arrays, new declaration syntax
+	};
+    void ?{}( TwoArrays( T ) & , int );
+    void ^?{}( TwoArrays( T ) & );
+}
+
+#endif // __TRAITS_HFA__

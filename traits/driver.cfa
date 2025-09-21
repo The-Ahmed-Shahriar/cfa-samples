@@ -1,0 +1,10 @@
+#include <fstream.hfa>
+#include "traits.hfa"
+
+int main() {
+	enum { size = 5 };
+	TwoArrays( int ) tai = { size };
+	TwoArrays( double ) tad = { size };
+	for ( i; size ) { tai.x[i] = i; tad.y[i] = i; }	// initialize
+	sout | sum( tai.x, size ) | sum( tad.y, size );	// select int and double sum
+}

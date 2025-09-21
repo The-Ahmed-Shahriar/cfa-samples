@@ -1,0 +1,16 @@
+#include <fstream.hfa>
+#include "incr.hfa"
+
+int main() {
+	enum { bound = 26 };
+    Incr( int ) inc_int = { 2 };
+    // Incr( char ) inc_char = { 'A' };
+    int num;
+    // char ch;
+
+	for ( bound ) {
+        num = next( inc_int );
+        // ch = next( inc_char );
+        sout | num ; //| " " | ch;
+    } // for
+}

@@ -1,0 +1,29 @@
+#ifndef __INCR_HFA__
+#define __INCR_HFA__
+
+#include <coroutine.hfa>
+#include <fstream.hfa>
+#include <stdlib.hfa>
+
+forall( T )
+trait incrementable {
+    // void ?{}( T &, zero_t );
+	// void ?{}( T &, one_t );
+	// void ?{}( T &, T );
+    // T ?=?( T &, T );
+	T ++?( T & );
+	T ?++( T & );
+};
+
+forall( T, ostype | incrementable( T ) | ostream( ostype ) ) {
+    ostype & ?|?( ostype & , T );
+    void ?|?( ostype & , T );
+}
+
+forall( T | incrementable( T ) ) {
+    coroutine Incr { T cur; };
+    void ?{}( Incr( T ) & , T );
+    T next( Incr( T ) & );
+}
+
+#endif // __INCR_HFA__

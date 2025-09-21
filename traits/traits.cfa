@@ -1,0 +1,17 @@
+#include "traits.hfa"
+
+forall( T | sumable( T ) )				// polymorphic, use trait
+T sum( T a[ ], size_t size ) {
+	T total = 0;						// instantiate T from 0 by calling its constructor
+	for ( i; size ) total += a[i];		// select appropriate +
+	return total;
+}
+
+forall( T | sumable( T ) ) {			// forall distribution
+	void ?{}( TwoArrays( T ) & ta, int size ) with ( ta ) { // constructor
+		x = alloc( size ); y = alloc( size );
+	}
+	void ^?{}( TwoArrays( T ) & ta ) with ( ta ) { // destructor
+		free( x ); free( y );
+	}
+}

@@ -1,0 +1,26 @@
+#include "incr.hfa"
+
+// #define resumePoll( coroutine ) resume( coroutine ); poll()
+// #define suspendPoll suspend; poll()
+
+
+forall( T | incrementable( T ) ) {
+
+    void ?{}( Incr( T ) & this, T init ) {
+        this.cur = init;
+    }
+
+    T next( Incr( T ) & this ) {
+        resume( this );
+        return this.cur;
+    }
+
+    // ============= private ===================
+
+    void main( Incr( T ) & this ) {
+        for () {
+            suspend;
+            ++this.cur;
+        } // for
+    }
+}
